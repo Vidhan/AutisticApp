@@ -218,6 +218,7 @@
 												$max_feature = "logical";
 											}
 											$result_str = $max_feature;
+											echo "Current result: ". $result_str;
 
 											$sql = "INSERT INTO child_statistics (verbal, musical, logical, visual, kinaesthetic, result)
 											VALUES ($verbal_pct, $musical_pct, $logical_pct, $visual_pct, $kinaesthetic_pct, $result_str);";
