@@ -83,7 +83,10 @@
 											<h2>What kind of learner are you?</h2>
 											<p>Take this quiz frequently to understand your learning style</p>
 										</header>
-										<form name="general-quiz" action="quiz.php">
+										<button id="start_button" onclick="startButton(event)">
+											<img src="images/mic.jpeg"  style="width:45px;height:40px;" alt="Start">
+										</button>
+										<form name="general-quiz" action="quiz.php" id="searchform">
 											<p>
 												1. What is the color of this Tomato?
 												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/single-tomato.jpg" width="50" height="50"/>
@@ -101,7 +104,7 @@
 											<p>
 												4. Identify this fruit
 												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/Banana.jpg" width="50" height="50"/>
-												<input type="text" name="q4"/>
+												<input id="search_box" type="text" name="q4"/>
 											</p>
 											<p>
 												5. Find the next number in the series
@@ -124,6 +127,10 @@
 											</p>
 										<input type="submit" value="Submit" action="submit"/>
 										</form>
+										<div id="results">
+							  				<span id="final_span" class="final"></span>
+							  				<span id="interim_span" class="interim"></span>
+										</div>
 									</article>
 
 							</div>
@@ -167,6 +174,14 @@
 							</section>
 						</div>
 					</div>
+				</div>
+
+				<div style="background-color: #fff; border-color: #fff;" class="center">
+		  			<div id="div_language">
+		    			<select style="background-color: #fff; border-color: #fff;" id="select_language" onchange="" hidden="true"></select>
+		    			&nbsp;&nbsp;
+		    			<select style="background-color: #fff; border-color: #fff;" id="select_dialect" hidden="true"></select>
+		  			</div>
 				</div>
 
 			<!-- Footer -->
@@ -236,6 +251,143 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+
+			<script>
+				var final_transcript = '';
+				var recognizing = false;
+				var ignore_onend;
+				var start_timestamp;
+				if (!('webkitSpeechRecognition' in window)) {
+  					upgrade();
+				} else {
+  					start_button.style.display = 'inline-block';
+  					var recognition = new webkitSpeechRecognition();
+  					recognition.continuous = true;
+  					recognition.interimResults = true;
+
+  					recognition.onstart = function() {
+    					recognizing = true;
+    					showInfo('info_speak_now');
+    					start_img.src = 'images/micon.png';
+  					};
+
+  					recognition.onerror = function(event) {
+    					if (event.error == 'no-speech') {
+      						start_img.src = 'images/mic.png';
+      						showInfo('info_no_speech');
+      						ignore_onend = true;
+    					}
+    					if (event.error == 'audio-capture') {
+      						start_img.src = 'images/mic.png';
+      						showInfo('info_no_microphone');
+      						ignore_onend = true;
+    					}
+    					if (event.error == 'not-allowed') {
+      						if (event.timeStamp - start_timestamp < 100) {
+        						showInfo('info_blocked');
+      						} else {
+        						showInfo('info_denied');
+      						}
+      						ignore_onend = true;
+    					}
+  					};
+
+  					recognition.onend = function() {
+    					recognizing = false;
+    					if (ignore_onend) {
+      						return;
+    					}
+    					start_img.src = 'images/mic.png';
+    					if (!final_transcript) {
+      						showInfo('info_start');
+      						return;
+    					}
+    					showInfo('');
+    					if (window.getSelection) {
+      						window.getSelection().removeAllRanges();
+      						var range = document.createRange();
+      						range.selectNode(document.getElementById('final_span'));
+      						window.getSelection().addRange(range);
+    					}
+  					};
+
+  					recognition.onresult = function(event) {
+    					var interim_transcript = '';
+    					for (var i = event.resultIndex; i < event.results.length; ++i) {
+      						if (event.results[i].isFinal) {
+        						final_transcript += event.results[i][0].transcript;
+      						} else {
+        						interim_transcript += event.results[i][0].transcript;
+      						}
+    					}
+    					final_transcript = capitalize(final_transcript);
+    					final_span.innerHTML = linebreak(final_transcript);
+    					interim_span.innerHTML = linebreak(interim_transcript);
+
+    					document.getElementById("search_box").value=final_span.innerHTML;
+
+    					if (final_transcript || interim_transcript) {
+      						showButtons('inline-block');
+    					}
+  					};
+				}
+
+				function upgrade() {
+  					start_button.style.visibility = 'hidden';
+  					showInfo('info_upgrade');
+				}
+
+				var two_line = /\n\n/g;
+				var one_line = /\n/g;
+
+				function linebreak(s) {
+  					return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+				}
+
+				var first_char = /\S/;
+				
+				function capitalize(s) {
+  					return s.replace(first_char, function(m) { return m.toUpperCase(); });
+				}
+
+				function startButton(event) {
+  					if (recognizing) {
+    					recognition.stop();
+    					return;
+  					}
+  					final_transcript = '';
+  					recognition.lang = select_dialect.value;
+  					recognition.start();
+  					ignore_onend = false;
+  					final_span.innerHTML = '';
+  					interim_span.innerHTML = '';
+  					//start_img.src = 'micon.gif';
+  					showInfo('info_allow');
+  					showButtons('none');
+  					start_timestamp = event.timeStamp;
+				}
+
+				function showInfo(s) {
+  					if (s) {
+    					for (var child = info.firstChild; child; child = child.nextSibling) {
+      						if (child.style) {
+        						child.style.display = child.id == s ? 'inline' : 'none';
+      						}
+    					}
+    					info.style.visibility = 'visible';
+  					} else {
+    					info.style.visibility = 'hidden';
+  					}
+				}
+
+				var current_style;
+				function showButtons(style) {
+  					if (style == current_style) {
+    					return;
+  					}
+  					current_style = style;
+				}
+		</script>
 
 	</body>
 </html>
