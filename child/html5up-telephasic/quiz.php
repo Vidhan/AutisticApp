@@ -162,7 +162,7 @@
 											$num_rows = mysqli_num_rows($result);
 											
 
-											echo "Hi Samantha, Here are your results!";
+											echo "<h1>Hi Samantha, Here are your results!</h1>";
 											echo "<br/>";
 											
 
@@ -176,9 +176,24 @@
 											if ($num_rows > 0) {
 
 											    // output data of each row
+											    echo "<table>";
+											    echo "<tr>";
+											    echo "<th>Verbal</th>";
+											    echo "<th>Musical</th>";
+											    echo "<th>Logical</th>";
+											    echo "<th>Visual</th>";
+											    echo "<th>Kinaesthetic</th>";
+											    echo "<th>Result</th>";
+											    echo "</tr>";
 											    while($row = mysqli_fetch_assoc($result)) {
-											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
-											        echo "<br/>";
+											    	echo "<tr>";
+											    	echo "<td>$row["verbal"]</td>";
+											    	echo "<td>$row["musical"]</td>";
+											    	echo "<td>$row["logical"]</td>";
+											    	echo "<td>$row["visual"]</td>";
+											    	echo "<td>$row["kinaesthetic"]</td>";
+											    	echo "<th>$row["result"]</th>";
+											        echo "</tr>";
 
 											        $final_verbal += (float)$row["verbal"];
 													$final_musical += (float)$row["musical"];
@@ -186,6 +201,7 @@
 													$final_visual += (float)$row["visual"];
 													$final_kinaesthetic += (float)$row["kinaesthetic"];
 											    }
+											    echo "</table>";
 											} else {
 												echo $conn->error;
 											    echo "0 results";
@@ -244,7 +260,7 @@
 											}
 											$final_result = $max_feature;
 
-											echo "Final Result: ".$final_result;
+											echo "<h1>Final Result: ".$final_result. "</h1>";
 											
 
 										?>
