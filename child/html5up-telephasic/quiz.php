@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE HTML>
 <!--
 	Telephasic by HTML5 UP
@@ -83,47 +85,36 @@
 											<h2>What kind of learner are you?</h2>
 											<p>Take this quiz frequently to understand your learning style</p>
 										</header>
-										<form name="general-quiz" action="quiz.php">
-											<p>
-												1. What is the color of this Tomato?
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/single-tomato.jpg" width="50" height="50"/>
-												<input type="text" name="q1"/>
-											</p>
-											<p>
-												2. Which is the biggest fish?
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/bigger_smaller.jpg" width="80" height="50"/>
-												<input type="text" name="q2"/>
-											</p>
-											<p>
-												3. What is your name?
-												<input type="text" name="q3"/>
-											</p>
-											<p>
-												4. Identify this fruit
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/Banana.jpg" width="50" height="50"/>
-												<input type="text" name="q4"/>
-											</p>
-											<p>
-												5. Find the next number in the series
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/series.jpg" width="50" height="50"/>
-												<input type="text" name="q1"/>
-											</p>
-											<p>
-												6. Count the number of circles
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/count_circles.png" width="50" height="50"/>
-												<input type="text" name="q5"/>
-											</p>
-											<p>
-												7. 1+1+1+1+1+1 = ?
-												<input type="text" name="q6"/>
-											</p>
-											<p>
-												8. Identify this shape
-												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/Red-circle.png" width="50" height="50"/>
-												<input type="text" name="q7"/>
-											</p>
-										<input type="submit" value="Submit" action="submit"/>
-										</form>
+										<?php
+											$servername = "pennapps.c9vwrfxwhz2s.us-east-1.rds.amazonaws.com";
+											$username = "pennapps";
+											$password = "pennapps";
+											$dbname = "pennapps2017";
+
+											// Create connection
+											$conn = mysqli_connect($servername, $username, $password);
+
+											// Check connection
+											if (!$conn) {
+											    die("Connection failed: " . mysqli_connect_error());
+											}
+											echo "Connected successfully";
+
+											$sql = "SELECT verbal, musical, logical, visual, kinaesthetic FROM child_statistics";
+											$result = $conn->query($sql);
+
+											echo "Hi Samantha, Here are your results!"
+
+											if ($result->num_rows > 0) {
+
+											    // output data of each row
+											    while($row = $result->fetch_assoc()) {
+											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"]
+											    }
+											} else {
+											    echo "0 results";
+											}
+										?>
 									</article>
 
 							</div>
@@ -238,4 +229,7 @@
 			<script src="assets/js/main.js"></script>
 
 	</body>
+	<?php
+		mysqli_close($conn);
+	?>
 </html>
