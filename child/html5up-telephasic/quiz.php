@@ -177,7 +177,7 @@
 											    // output data of each row
 											    while($row = mysqli_fetch_assoc($result)) {
 											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
-											        <br/>
+											        echo "<br/>";
 
 											        $final_verbal += (float)$row["verbal"];
 													$final_musical += (float)$row["musical"];
