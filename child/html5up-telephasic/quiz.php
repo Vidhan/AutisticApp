@@ -116,7 +116,7 @@
 											$sql = "SELECT verbal, musical, logical, visual, kinaesthetic FROM child_statistics";
 											$result = $conn->query($sql);
 
-											echo "Hi Samantha, Here are your results!"
+											echo "Hi Samantha, Here are your results!";
 
 											$final_verbal = 0;
 											$final_musical = 0;
@@ -129,7 +129,7 @@
 
 											    // output data of each row
 											    while($row = $result->fetch_assoc()) {
-											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"]
+											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
 
 											        $final_verbal = (float)$row["verbal"];
 													$final_musical = (float)$row["musical"];
