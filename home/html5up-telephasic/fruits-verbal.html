@@ -13,6 +13,38 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<script type="text/javascript">
+			function myFunc(){
+				console.clear();
+				videos = document.querySelectorAll("video");
+
+				for (var i = 0, l = videos.length; i < l; i++) {
+    				var video = videos[i];
+    				var src = video.src || (function () {
+        				var sources = video.querySelectorAll("source");
+        				for (var j = 0, sl = sources.length; j < sl; j++) {
+            				var source = sources[j];
+            				var type = source.type;
+            				var isMp4 = type.indexOf("mp4") != -1;
+            				if (isMp4) return source.src;
+        				}
+        				return null;
+    				})();
+    				if (src) {
+        				var isYoutube = src && src.match(/(?:youtu|youtube)(?:\.com|\.be)\/([\w\W]+)/i);
+        				if (isYoutube) {
+            				var id = isYoutube[1].match(/watch\?v=|[\w\W]+/gi);
+            				id = (id.length > 1) ? id.splice(1) : id;
+				            id = id.toString();
+				            var mp4url = "http://www.youtubeinmp4.com/redirect.php?video=";
+				            video.src = mp4url + id;
+        				}
+      				}
+    			}
+  			}
+  			setTimeout(myFunc,3000);
+
+		</script>
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
@@ -51,7 +83,9 @@
 								<header>
 									<h2>Verbal</h2>
 								</header>
-								<!-- Your code goes here Vidhan -->
+								<video controls="true">
+    								<source src="https://www.youtube.com/watch?v=ROJ2otUAZhs" type="video/mp4" />
+								</video>
 							</article>
 
 					</div>
