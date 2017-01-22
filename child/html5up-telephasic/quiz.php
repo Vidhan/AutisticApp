@@ -1,4 +1,17 @@
 <?php
+	$num_verbal = 0;
+	$num_musical = 0;
+	$num_logical = 4;
+	$num_visual = 3;
+	$num_kinaesthetic = 0;
+
+	$verbal = 0;
+	$musical = 0;
+	$logical = 0;
+	$visual = 0;
+	$kinaesthetic = 0;
+
+	$quiz_answers=array("q1"=>"red","q2"=>"third","q3"=>"samantha","q4"=>"banana","q5"=>"9","q6"=>"4","q7"=>"6","q8"=>"circle");
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -105,15 +118,51 @@
 
 											echo "Hi Samantha, Here are your results!"
 
+											$final_verbal = 0;
+											$final_musical = 0;
+											$final_logical = 0;
+											$final_visual = 0;
+											$final_kinaesthetic = 0;
+											$final_result = "";
+
 											if ($result->num_rows > 0) {
 
 											    // output data of each row
 											    while($row = $result->fetch_assoc()) {
 											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"]
+
+											        $final_verbal = (float)$row["verbal"];
+													$final_musical = (float)$row["musical"];
+													$final_logical = (float)$row["logical"];
+													$final_visual = (float)$row["visual"];
+													$final_kinaesthetic = (float)$row["kinaesthetic"];
+													$final_result = $row["result"];
 											    }
 											} else {
 											    echo "0 results";
 											}
+
+											$verbal_pct = ($verbal/$num_verbal) * 100;
+											$musical_pct = ($musical/$num_musical) * 100;
+											$logical_pct = ($logical/$num_logical) * 100;
+											$visual_pct = ($visual/$num_visual) * 100;
+											$kinaesthetic_pct = ($kinaesthetic/$num_kinaesthetic) * 100;
+
+											$final_verbal = $final_verbal + $verbal_pct;
+											$final_musical = $final_musical + $musical_pct;
+											$final_logical = $final_logical + $logical_pct;
+											$final_visual = $final_visual + $visual_pct;
+											$final_kinaesthetic = $final_kinaesthetic + $kinaesthetic_pct;
+
+											$sql = "INSERT INTO child_statistics (verbal, musical, logical, visual, kinaesthetic, result)
+											VALUES ($final_verbal, $final_musical, $final_logical, $final_visual, $final_kinaesthetic, $final_result)";
+
+											if ($conn->query($sql) === TRUE) {
+											    echo "New record created successfully";
+											} else {
+											    echo "Error: " . $sql . "<br>" . $conn->error;
+											}
+
 										?>
 									</article>
 
