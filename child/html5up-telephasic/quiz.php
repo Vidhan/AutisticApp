@@ -185,14 +185,23 @@
 											    echo "<th>Kinaesthetic</th>";
 											    echo "<th>Result</th>";
 											    echo "</tr>";
+
+
 											    while($row = mysqli_fetch_assoc($result)) {
+											    	$row_verbal = $row['verbal'];
+												    $row_musical = $row['musical'];
+												    $row_logical = $row['logical'];
+												    $row_visual = $row['visual'];
+												    $row_kinaesthetic = $row['kinaesthetic'];
+												    $row_result = $row['result'];
+											    
 											    	echo "<tr>";
-											    	echo "<td>$row["verbal"]</td>";
-											    	echo "<td>$row["musical"]</td>";
-											    	echo "<td>$row["logical"]</td>";
-											    	echo "<td>$row["visual"]</td>";
-											    	echo "<td>$row["kinaesthetic"]</td>";
-											    	echo "<th>$row["result"]</th>";
+											    	echo "<td>$row_verbal</td>";
+											    	echo "<td>$row_musical</td>";
+											    	echo "<td>$row_logical</td>";
+											    	echo "<td>$row_visual</td>";
+											    	echo "<td>$row_kinaesthetic</td>";
+											    	echo "<th>$row_result</th>";
 											        echo "</tr>";
 
 											        $final_verbal += (float)$row["verbal"];
