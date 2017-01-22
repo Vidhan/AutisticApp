@@ -163,6 +163,7 @@
 											
 
 											echo "Hi Samantha, Here are your results!";
+											echo "<br/>"
 											
 
 											$final_verbal = 0;
