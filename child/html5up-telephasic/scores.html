@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <link rel="stylesheet" type="text/css" href="css.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="progressbar.js"></script>
+    
+    <script type="text/javascript">
+      function drawChart() {
+        var barVerbal = new ProgressBar.Circle('#containerVerbal', {easing: 'easeInOut', strokeWidth:2, color: '#abcdef',
+          trailColor: '#f4f4f4', svgStyle: {
+          display: 'block',
+          width: '100%'
+          }, text:{
+            value: "Verbal"
+          }});
+
+        var barLogical = new ProgressBar.Circle('#containerLogical', {easing: 'easeInOut', strokeWidth:2, color: '#abcdef',
+          trailColor: '#f4f4f4', svgStyle: {
+          display: 'block',
+          width: '100%'
+          }, text:{
+            value: "Logical"
+          }});
+
+        var barMusical = new ProgressBar.Circle('#containerMusical', {easing: 'easeInOut', strokeWidth:2, color: '#abcdef',
+          trailColor: '#f4f4f4', svgStyle: {
+          display: 'block',
+          width: '100%'
+          }, text:{
+            value: "Musical"
+          }});
+
+        var barVisual = new ProgressBar.Circle('#containerVisual', {easing: 'easeInOut', strokeWidth:2, color: '#abcdef',
+          trailColor: '#f4f4f4', svgStyle: {
+          display: 'block',
+          width: '100%'
+          }, text:{
+            value: "Visual"
+          }});
+
+        var barKinaesthetic  = new ProgressBar.Circle('#containerKinaesthetic ', {easing: 'easeInOut', strokeWidth:2, color: '#abcdef',
+          trailColor: '#f4f4f4', svgStyle: {
+          display: 'block',
+          width: '100%'
+          }, text:{
+            value: "Kinaesthetic"
+          }});
+
+        barVerbal.animate(0.3, {
+            duration: 800
+          }, function() {
+          console.log('Animation has finished');
+        })
+        barLogical.animate(0.2, {
+            duration: 800
+          }, function() {
+          console.log('Animation has finished');
+        })
+        barMusical.animate(0.6, {
+            duration: 800
+          }, function() {
+          console.log('Animation has finished');
+        })
+        barVisual.animate(0.9, {
+            duration: 800
+          }, function() {
+          console.log('Animation has finished');
+        })
+        barKinaesthetic.animate(0.25, {
+            duration: 800
+          }, function() {
+          console.log('Animation has finished');
+        })
+      }
+
+      $( document ).ready(function() {
+        drawChart();
+      });
+    </script>
+  </head>
+
+  <body class="bodyclass">
+  <div id="containerVerbal" style="float:left"></div>
+    <div id="containerLogical" style="float:left"></div>
+    <div id="containerMusical" style="float:left"></div>
+    <div id="containerVisual" style="float:left"></div>
+    <div id="containerKinaesthetic" style="float:left"></div>
+  </body>
+</html>

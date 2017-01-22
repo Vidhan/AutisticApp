@@ -23,6 +23,7 @@
 	}
 
 	body {
+		background-image: url("bg.jpeg");
 		line-height: 1;
 	}
 
@@ -2089,6 +2090,10 @@
 			margin: 0 0 1.3em 0;
 			vertical-align: top;
 			width: 100%;
+		}
+
+		form.form-right {
+			float: right;
 		}
 
 		form .half {
