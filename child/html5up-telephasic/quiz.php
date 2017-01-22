@@ -11,7 +11,7 @@
 	$visual = 0;
 	$kinaesthetic = 0;
 
-	$quiz_answers=array("q1"=>"red","q2"=>"third","q3"=>"samantha","q4"=>"banana","q5"=>"9","q6"=>"4","q7"=>"6","q8"=>"circle");
+	$quiz_answers=array("q1"=>"red","q2"=>"3","q3"=>"samantha","q4"=>"banana","q5"=>"9","q6"=>"4","q7"=>"6","q8"=>"circle");
 ?>
 <!DOCTYPE HTML>
 <!--
