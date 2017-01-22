@@ -2090,6 +2090,10 @@
 			vertical-align: top;
 			width: 100%;
 		}
+		
+		form.form-right {
+			float: right;
+		}
 
 		form .half {
 			width: calc(50% + 1em) !important;

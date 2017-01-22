@@ -2092,6 +2092,10 @@
 			width: 100%;
 		}
 
+		form.form-right {
+			float: right;
+		}
+
 		form .half {
 			width: calc(50% + 1em) !important;
 			padding-left: 2em;
