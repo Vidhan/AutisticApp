@@ -116,6 +116,7 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+			<script src="http://code.responsivevoice.org/responsivevoice.js"> </script>
 			<script type="text/javascript">
 				var final_transcript = '';
 				var recognizing = false;
@@ -260,8 +261,11 @@
 					xmlHttp.onreadystatechange = function() {
 						//alert(xmlHttp.readyState);
 	  					if (xmlHttp.readyState === 4) {
-	    					var response = xmlHttp.responseText;
-	    					document.getElementById("chat-content").innerHTML += "<br/>" + decodeURIComponent(response);
+	    					var response = decodeURIComponent(xmlHttp.responseText);
+	    					sayIt(response);
+	    					document.getElementById("chat-content").innerHTML += "<br/>" + response;
+	    					document.getElementById("user_text").value = "";
+
 	      					/*if (xmlHttp.status === 200 && response.status === 'OK') {
 	         					alert('successful');
 	      					} else {
@@ -272,6 +276,11 @@
 	    			xmlHttp.open("GET", sendingSub, true);
 	    			xmlHttp.send(null);
 					}
+
+				function sayIt(question){
+                    responsiveVoice.setDefaultVoice("US English Female");
+                    responsiveVoice.speak(question, "US English Male", {rate: 1.0});
+                }
 			</script>
 
 	</body>
