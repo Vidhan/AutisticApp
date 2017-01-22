@@ -1,6 +1,6 @@
 <?php
-	$num_verbal = 0;
-	$num_musical = 0;
+	$num_verbal = 3;
+	$num_musical = 2;
 	$num_logical = 4;
 	$num_visual = 3;
 	$num_kinaesthetic = 0;
@@ -10,6 +10,8 @@
 	$logical = 0;
 	$visual = 0;
 	$kinaesthetic = 0;
+	$result = "";
+	$max_score = -1.0;
 
 	$quiz_answers=array("q1"=>"red","q2"=>"3","q3"=>"samantha","q4"=>"banana","q5"=>"9","q6"=>"4","q7"=>"6","q8"=>"circle");
 ?>
@@ -99,6 +101,45 @@
 											<p>Take this quiz frequently to understand your learning style</p>
 										</header>
 										<?php
+
+											$q1 = $_GET["q1"];
+											$q2 = $_GET["q2"];
+											$q3 = $_GET["q3"];
+											$q4 = $_GET["q4"];
+											$q5 = $_GET["q5"];
+											$q6 = $_GET["q6"];
+											$q7 = $_GET["q7"];
+											$q8 = $_GET["q8"];
+
+											if(strcmp(strtolower($q1), $quiz_answers["q1"]) == 0) {
+												$verbal++;
+												$musical++;
+												$visual++;
+											}
+											if(strcmp(strtolower($q2), $quiz_answers["q2"]) == 0) {
+												$verbal++;
+												$musical++;
+												$visual++;
+											} 
+											if(strcmp(strtolower($q3), $quiz_answers["q3"]) == 0) {
+												$verbal++;
+											} 
+											if(strcmp(strtolower($q4), $quiz_answers["q4"]) == 0) {
+												$logical++;
+											} 
+											if(strcmp(strtolower($q5), $quiz_answers["q5"]) == 0) {
+												$logical++;
+											} 
+											if(strcmp(strtolower($q6), $quiz_answers["q6"]) == 0) {
+												$logical++;
+											} 
+											if(strcmp(strtolower($q7), $quiz_answers["q7"]) == 0) {
+												$logical++;
+											} 
+											if(strcmp(strtolower($q8), $quiz_answers["q8"]) == 0) {
+												$visual++;
+											} 
+
 											$servername = "pennapps.c9vwrfxwhz2s.us-east-1.rds.amazonaws.com";
 											$username = "pennapps";
 											$password = "pennapps";
@@ -137,12 +178,11 @@
 											    while($row = mysqli_fetch_assoc($result)) {
 											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
 
-											        $final_verbal = (float)$row["verbal"];
-													$final_musical = (float)$row["musical"];
-													$final_logical = (float)$row["logical"];
-													$final_visual = (float)$row["visual"];
-													$final_kinaesthetic = (float)$row["kinaesthetic"];
-													$final_result = $row["result"];
+											        $final_verbal += (float)$row["verbal"];
+													$final_musical += (float)$row["musical"];
+													$final_logical += (float)$row["logical"];
+													$final_visual += (float)$row["visual"];
+													$final_kinaesthetic += (float)$row["kinaesthetic"];
 											    }
 											} else {
 												echo $conn->error;
@@ -161,14 +201,48 @@
 											$final_visual = $final_visual + $visual_pct;
 											$final_kinaesthetic = $final_kinaesthetic + $kinaesthetic_pct;
 
+											$max_score = $verbal;
+											$max_feature = "verbal";
+											if ($max_score < $musical) {
+												$max_score = $musical;
+												$max_feature = "musical";
+											}
+											if ($max_score < $visual) {
+												$max_score = $visual;
+												$max_feature = "visual";
+											}
+											if ($max_score < $logical) {
+												$max_score = $logical;
+												$max_feature = "logical";
+											}
+											$result = $max_feature;
+
 											$sql = "INSERT INTO child_statistics (verbal, musical, logical, visual, kinaesthetic, result)
-											VALUES ($final_verbal, $final_musical, $final_logical, $final_visual, $final_kinaesthetic, $final_result);";
+											VALUES ($verbal, $musical, $logical, $visual, $kinaesthetic, $result);";
 
 											if ($conn->query($sql) === TRUE) {
 											    echo "New record created successfully";
 											} else {
 											    echo "Error: " . $sql . "<br>" . $conn->error;
 											}
+
+											$max_score = $final_verbal;
+											$max_feature = "verbal";
+											if ($max_score < $final_musical) {
+												$max_score = $final_musical;
+												$max_feature = "musical";
+											}
+											if ($max_score < $final_visual) {
+												$max_score = $final_visual;
+												$max_feature = "visual";
+											}
+											if ($max_score < $final_logical) {
+												$max_score = $final_logical;
+												$max_feature = "logical";
+											}
+											$final_result = $max_feature;
+
+											echo "Final Result: ".$final_result;
 											
 
 										?>
