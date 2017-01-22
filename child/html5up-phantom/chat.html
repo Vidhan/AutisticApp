@@ -47,6 +47,7 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Chat with me!</h1>
+							<div id="image_div"></div>
 							<p id = "chat-content"></p>
 							<input type="text" id="name" placeholder="Who do you want to talk to?"/>
 							<form action="javascript:sendAndReceive()">
@@ -252,11 +253,13 @@
   					}
   					current_style = style;
 				}
+
 				function sendAndReceive() {
 					var query = document.getElementById("user_text").value;
 					var name = document.getElementById("name").value;
 					var sendingSub = "http://ec2-54-82-36-127.compute-1.amazonaws.com:8080/wikivr?name=Samantha&person=" + encodeURIComponent(name) + "&query=" + encodeURIComponent(query);
 					//alert(sendingSub);
+					getImage(name);
 					var xmlHttp = new XMLHttpRequest();
 					xmlHttp.onreadystatechange = function() {
 						//alert(xmlHttp.readyState);
@@ -275,7 +278,23 @@
 					}
 	    			xmlHttp.open("GET", sendingSub, true);
 	    			xmlHttp.send(null);
+				}
+
+				function getImage(name) {
+					var sendingSubject = "http://ec2-54-82-36-127.compute-1.amazonaws.com:8080/photo/" + encodeURIComponent(name);
+					var xmlHttp2 = new XMLHttpRequest();
+					xmlHttp2.onreadystatechange = function() {
+						//alert(xmlHttp2.readyState);
+	  					if (xmlHttp2.readyState === 4) {
+	    					var image_url = xmlHttp2.responseText;
+	    					//alert(image_url);
+	    					var image = "<img src=\"" + image_url + "\"/>";
+	    					document.getElementById("image_div").innerHTML = image; 
+	  					}
 					}
+	    			xmlHttp2.open("GET", sendingSubject, true);
+	    			xmlHttp2.send(null);
+				}
 
 				function sayIt(question){
                     responsiveVoice.setDefaultVoice("US English Female");
