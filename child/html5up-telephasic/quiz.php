@@ -187,12 +187,12 @@
 											    echo "</tr>";
 											    while($row = mysqli_fetch_assoc($result)) {
 											    	echo "<tr>";
-											    	echo "<td>$row["verbal"]</td>";
-											    	echo "<td>$row["musical"]</td>";
-											    	echo "<td>$row["logical"]</td>";
-											    	echo "<td>$row["visual"]</td>";
-											    	echo "<td>$row["kinaesthetic"]</td>";
-											    	echo "<th>$row["result"]</th>";
+											    	echo "<td>$row['verbal']</td>";
+											    	echo "<td>$row['musical']</td>";
+											    	echo "<td>$row['logical']</td>";
+											    	echo "<td>$row['visual']</td>";
+											    	echo "<td>$row['kinaesthetic']</td>";
+											    	echo "<th>$row['result']</th>";
 											        echo "</tr>";
 
 											        $final_verbal += (float)$row["verbal"];
