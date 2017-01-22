@@ -10,7 +10,7 @@
 	$logical = 0;
 	$visual = 0;
 	$kinaesthetic = 0;
-	$result = "";
+	$result_str = "";
 	$max_score = -1.0;
 
 	$quiz_answers=array("q1"=>"red","q2"=>"3","q3"=>"samantha","q4"=>"banana","q5"=>"9","q6"=>"4","q7"=>"6","q8"=>"circle");
@@ -216,13 +216,13 @@
 												$max_score = $logical;
 												$max_feature = "logical";
 											}
-											$result = $max_feature;
+											$result_str = $max_feature;
 
 											$sql = "INSERT INTO child_statistics (verbal, musical, logical, visual, kinaesthetic, result)
-											VALUES ($verbal, $musical, $logical, $visual, $kinaesthetic, $result);";
+											VALUES ($verbal_pct, $musical_pct, $logical_pct, $visual_pct, $kinaesthetic_pct, $result_str);";
 
 											if ($conn->query($sql) === TRUE) {
-											    echo "New record created successfully";
+											    //echo "New record created successfully";
 											} else {
 											    echo "Error: " . $sql . "<br>" . $conn->error;
 											}
