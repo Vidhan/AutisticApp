@@ -105,18 +105,24 @@
 											$dbname = "pennapps2017";
 
 											// Create connection
-											$conn = mysqli_connect($servername, $username, $password);
+											$conn = mysqli_connect($servername, $username, $password,$dbname) ;
 
 											// Check connection
 											if (!$conn) {
 											    die("Connection failed: " . mysqli_connect_error());
 											}
 											echo "Connected successfully";
+											
+											//$rs= mysql_query("select * from YEAR",$cn) or die(mysql_error());
+											
 
-											$sql = "SELECT verbal, musical, logical, visual, kinaesthetic FROM child_statistics";
-											$result = $conn->query($sql);
+											$sql = "SELECT verbal, musical, logical, visual, kinaesthetic, result FROM child_statistics;";
+											$result = mysqli_query($conn,$sql);
+											$num_rows = mysqli_num_rows($result);
+											
 
 											echo "Hi Samantha, Here are your results!";
+											
 
 											$final_verbal = 0;
 											$final_musical = 0;
@@ -124,11 +130,11 @@
 											$final_visual = 0;
 											$final_kinaesthetic = 0;
 											$final_result = "";
-
-											if ($result->num_rows > 0) {
+											
+											if ($num_rows > 0) {
 
 											    // output data of each row
-											    while($row = $result->fetch_assoc()) {
+											    while($row = mysqli_fetch_assoc($result)) {
 											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
 
 											        $final_verbal = (float)$row["verbal"];
@@ -139,6 +145,7 @@
 													$final_result = $row["result"];
 											    }
 											} else {
+												echo $conn->error;
 											    echo "0 results";
 											}
 
@@ -155,13 +162,14 @@
 											$final_kinaesthetic = $final_kinaesthetic + $kinaesthetic_pct;
 
 											$sql = "INSERT INTO child_statistics (verbal, musical, logical, visual, kinaesthetic, result)
-											VALUES ($final_verbal, $final_musical, $final_logical, $final_visual, $final_kinaesthetic, $final_result)";
+											VALUES ($final_verbal, $final_musical, $final_logical, $final_visual, $final_kinaesthetic, $final_result);";
 
 											if ($conn->query($sql) === TRUE) {
 											    echo "New record created successfully";
 											} else {
 											    echo "Error: " . $sql . "<br>" . $conn->error;
 											}
+											
 
 										?>
 									</article>
