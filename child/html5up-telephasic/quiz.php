@@ -152,7 +152,7 @@
 											if (!$conn) {
 											    die("Connection failed: " . mysqli_connect_error());
 											}
-											echo "Connected successfully";
+											//echo "Connected successfully";
 											
 											//$rs= mysql_query("select * from YEAR",$cn) or die(mysql_error());
 											
@@ -177,6 +177,7 @@
 											    // output data of each row
 											    while($row = mysqli_fetch_assoc($result)) {
 											        echo "Verbal: " . $row["verbal"]. " Musical: " . $row["musical"]. " Logical: " . $row["logical"]. " Visual: " . $row["visual"]. " Kinaesthetic: " . $row["kinaesthetic"]. " Class: " . $row["result"];
+											        <br/>
 
 											        $final_verbal += (float)$row["verbal"];
 													$final_musical += (float)$row["musical"];
