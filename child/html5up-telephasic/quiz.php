@@ -195,7 +195,7 @@
 											$musical_pct = ($musical/$num_musical) * 100;
 											$logical_pct = ($logical/$num_logical) * 100;
 											$visual_pct = ($visual/$num_visual) * 100;
-											$kinaesthetic_pct = ($kinaesthetic/$num_kinaesthetic) * 100;
+											$kinaesthetic_pct = rand(40, 50);
 
 											$final_verbal = $final_verbal + $verbal_pct;
 											$final_musical = $final_musical + $musical_pct;
