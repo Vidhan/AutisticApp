@@ -86,25 +86,25 @@
 										<button id="start_button" onclick="startButton(event)">
 											<img src="images/mic.jpeg"  style="width:45px;height:40px;" alt="Start">
 										</button>
-										<form name="general-quiz" action="quiz.php" id="searchform">
+										<form name="general-quiz" action="quiz.php" id="searchform" method="get">
 											<p>
 												1. What is the color of this Tomato?
 												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/single-tomato.jpg" width="50" height="50"/>
-												<input type="text" name="q1"/>
+												<input id="q1Input" type="text" name="q1" onfocus="sayIt('What is the color of this Tomato?')"/>
 											</p>
 											<p>
 												2. Identify this fruit. Please speak the answer.
 												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/Banana.jpg" width="50" height="50"/>
-												<input id="search_box" type="text" name="q4"/>
+												<input id="search_box" type="text" name="q4" />
 											</p>
 											<p>
 												3. What is your name?
-												<input type="text" name="q3"/>
+												<input id="q3input" type="text" name="q3"/>
 											</p>
 											<p>
 												4. Which is the biggest fish?
 												<img src="http://s3-us-west-2.amazonaws.com/pennapps2017/question_images/bigger_smaller.jpg" width="80" height="50"/>
-												<input type="text" name="q2"/>
+												<input type="text" id="q4input" name="q2"/>
 											</p>
 											<p>
 												5. Find the next number in the series
@@ -251,7 +251,14 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+            <script src="http://code.responsivevoice.org/responsivevoice.js"> </script>
+            <script type="text/javascript">
+                function sayIt(question){
+                    responsiveVoice.setDefaultVoice("US English Female");
+                    responsiveVoice.speak(question, "US English Female", {rate: 1.0});
+                }
+                //setTimeout(sayIt, 3000);
+            </script>
 			<script>
 				var final_transcript = '';
 				var recognizing = false;
