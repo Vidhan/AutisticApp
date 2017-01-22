@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <link rel="stylesheet" type="text/css" href="css.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var dataVerbal = new google.visualization.DataTable();
+        var dataLogical = new google.visualization.DataTable();
+        var dataMusical = new google.visualization.DataTable();
+        var dataVisual  = new google.visualization.DataTable();
+        var dataKinaesthetic = new google.visualization.DataTable();
+        dataVerbal.addColumn('string', 'Weeks');
+        dataVerbal.addColumn('number', 'Score');
+        dataLogical.addColumn('string', 'Weeks');
+        dataLogical.addColumn('number', 'Score');
+        dataMusical.addColumn('string', 'Weeks');
+        dataMusical.addColumn('number', 'Score');
+        dataVisual.addColumn('string', 'Weeks');
+        dataVisual.addColumn('number', 'Score');
+        dataKinaesthetic.addColumn('string', 'Weeks');
+        dataKinaesthetic.addColumn('number', 'Score');
+        dataVerbal.addRows([
+          ['Week1', 3],
+          ['Week2', 1],
+          ['Week3', 1],
+          ['Week4', 1],
+          ['Week5', 2]
+        ]);
+        dataLogical.addRows([
+          ['Week1', 8],
+          ['Week2', 1],
+          ['Week3', 7],
+          ['Week4', 1],
+          ['Week5', 9]
+        ]);
+        dataMusical.addRows([
+          ['Week1', 7],
+          ['Week2', 8],
+          ['Week3', 1],
+          ['Week4', 9],
+          ['Week5', 2]
+        ]);
+        dataVisual.addRows([
+          ['Week1', 0],
+          ['Week2', 10],
+          ['Week3', 5],
+          ['Week4', 10],
+          ['Week5', 2]
+        ]);
+        dataKinaesthetic.addRows([
+          ['Week1', 3],
+          ['Week2', 1],
+          ['Week3', 1],
+          ['Week4', 1],
+          ['Week5', 2]
+        ]);
+
+        // Set chart options
+        var optionsVerbal = {'title':'Verbal',
+                        'curveType': 'function',
+                       'width':500,
+                       'height':300};
+        var optionsLogical = {'title':'Logical',
+                        'curveType': 'function',
+                       'width':500,
+                       'height':300};
+        var optionsMusical = {'title':'Musical',
+                        'curveType': 'function',
+                       'width':500,
+                       'height':300};
+        var optionsVisual = {'title':'Visual',
+                        'curveType': 'function',
+                       'width':500,
+                       'height':300};
+        var optionsKinaesthetic = {'title':'Kinaesthetic',
+                        'curveType': 'function',
+                       'width':500,
+                       'height':300};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chartVerbal = new google.visualization.LineChart(document.getElementById('chartVerbal_div'));
+        var chartLogical = new google.visualization.LineChart(document.getElementById('chartLogical_div'));
+        var chartMusical = new google.visualization.LineChart(document.getElementById('chartMusical_div'));
+        var chartVisual = new google.visualization.LineChart(document.getElementById('chartVisual_div'));
+        var chartKinaesthetic = new google.visualization.LineChart(document.getElementById('chartKinaesthetic_div'));
+        chartVerbal.draw(dataVerbal, optionsVerbal);
+        chartLogical.draw(dataLogical, optionsLogical);
+        chartMusical.draw(dataMusical, optionsMusical);
+        chartVisual.draw(dataVisual, optionsVisual);
+        chartKinaesthetic.draw(dataKinaesthetic, optionsKinaesthetic);
+      }
+    </script>
+  </head>
+
+  <body class="bodyclass">
+    <!--Div that will hold the pie chart-->
+    <div id="chartVerbal_div"></div>
+    <div id="chartLogical_div"></div>
+    <div id="chartMusical_div"></div>
+    <div id="chartVisual_div"></div>
+    <div id="chartKinaesthetic_div"></div>
+ </body>
+</html>
